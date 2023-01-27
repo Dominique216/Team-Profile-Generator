@@ -1,0 +1,26 @@
+{
+  "name": "uta-bootcamp_challenge10",
+  "version": "1.0.0",
+  "description": "This is Challenge 10 for UT Austins Bootcamp",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dominique216/UTA-bootcamp_challenge10.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dominique216/UTA-bootcamp_challenge10/issues"
+  },
+  "homepage": "https://github.com/Dominique216/UTA-bootcamp_challenge10#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
