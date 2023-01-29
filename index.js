@@ -2,12 +2,10 @@ const inquirer = require('inquirer')
 const fs = require('fs')
 const engineers = require('./lib/engineer')
 const managerone = require('./lib/manager')
-const Employee = require('./lib/employee')
+const interns = require('./lib/intern')
+// const Employee = require('./lib/employee')
 const Allinfo = []
 
-// const { create } = require('domain')
-// const { create } = require('domain')
-// const { finished } = require('stream')
 // asks info about engineer
 const engineerQs = () => {
     inquirer
@@ -66,8 +64,8 @@ const internQs = () => {
         },
         {
             type: 'input',
-            message: "What is your intern's Office Number?",
-            name: 'InternsOffice'
+            message: "What is your intern's School?",
+            name: 'InternsSchool'
         },
         {
             type: 'checkbox',
@@ -76,22 +74,24 @@ const internQs = () => {
             choices: ['Add Engineer', 'Add Intern', 'Finish building my team'],
         } 
     ])
-    .then((data) => nextup(data))
+    .then((data) => {
+        Allinfo.push(data)
+        nextup(data)
+    })
 }
 
-
-// will add the ending tags to index.html when the user id done adding employees
+// will render the cards add the ending tags to index.html when the user id done adding employees
 const finished = () => {  
     console.log(Allinfo)
     renderHtmlCards();
-    fs.appendFile('index.html', `</main>
+    fs.appendFile('./dist/index.html', `</main>
 <script src="https://kit.fontawesome.com/24e32b4f06.js" crossorigin="anonymous"></script>
 </body>
 </html>`, (err) =>
 err ? console.error(err) : console.log('Success!'))
 }
 
-// calls the function questions corresponding to which team member you want to add
+// calls the questions corresponding to which team member you want to add
 nextup = (data)=> {
     if(data.options[0] === 'Add Engineer') {
         return engineerQs()
@@ -102,15 +102,6 @@ nextup = (data)=> {
     }
 }
 
-const createManagerCard = (data) => {
-        const managerNew = new managerone.Manager(data.ManagersName, data.ManagersId ,data.ManagersEmail ,data.ManagersOffice)
-        managerone.renderManager(managerNew);
-}
-
-const createEngineerCard = (data) => {
-        const engineerNew = new engineers.Engineer(data.EngineersName, data.EngineersId,data.EngineersEmail ,data.EngineersGit)
-        engineers.renderEngineer(engineerNew)
-}
 // first propmt that comes up. Asks about the team manager
 inquirer
     .prompt([
@@ -146,16 +137,18 @@ inquirer
         nextup(data)
     })
 
+// this will check the all info in array and iterrate through all the objs that have been added and create the correct caards depending on the properties of the objects
 const renderHtmlCards = () => {
     Allinfo.forEach(obj => {
         if(obj.hasOwnProperty('ManagersName')) {
-            // console.log(obj)
-            createManagerCard(obj)
+            const managerNew = new managerone.Manager(obj.ManagersName, obj.ManagersId, obj.ManagersEmail, obj.ManagersOffice)
+            managerone.renderManager(managerNew);
         } else if(obj.hasOwnProperty('EngineersName')) {
-            // console.log(obj)
-            createEngineerCard(obj)
+            const engineerNew = new engineers.Engineer(obj.EngineersName, obj.EngineersId, obj.EngineersEmail, obj.EngineersGit)
+            engineers.renderEngineer(engineerNew)
         } else if(obj.hasOwnProperty('InternsName')) {
-            createInternCard(obj)
+            const internNew = new interns.Intern(obj.InternsName, obj.InternsId, obj.InternsEmail, obj.InternsSchool)
+            interns.renderIntern(internNew)
         }
     })
 }
