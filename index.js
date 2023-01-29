@@ -1,5 +1,7 @@
 const inquirer = require('inquirer')
-
+const fs = require('fs')
+const engineers = require('./lib/engineer')
+// const { finished } = require('stream')
 // asks info about engineer
 engineerQs = () => {
     inquirer
@@ -7,31 +9,35 @@ engineerQs = () => {
             {
                 type: 'input',
                 message: "What is your engineer's name?",
-                name: 'ManagersName'
+                name: 'EngineersName'
             },
             {
                 type: 'input',
                 message: "What is your engineer's ID",
-                name: 'ManagersId'
+                name: 'EngineersId'
             },
             {
                 type: 'input',
                 message: "What is your engineer's Email?",
-                name: 'ManagersEmail'
+                name: 'EngineersEmail'
             },
             {
                 type: 'input',
-                message: "What is your engineer's Office Number?",
-                name: 'ManagersOffice'
+                message: "What is your engineer's GitHub username?",
+                name: 'EngineersGit'
             },
             {
                 type: 'checkbox',
                 message: "Would you like to add a new team member",
                 name: 'options',
-                choices: ['Add Engineer', 'Add Intern', 'Finish biulding my team'],
+                choices: ['Add Engineer', 'Add Intern', 'Finish building my team'],
             } 
         ])
-    .then((data) => nextup(data))
+    .then((data) => {
+        const engineerNew = new engineers.Engineer(data.EngineersName, data.EngineersId,data.EngineersEmail ,data.EngineersGit)
+        engineers.renderEngineer(engineerNew)
+        nextup(data);
+    })
 }
 
 // asks info about interns
@@ -41,31 +47,40 @@ internQs = () => {
         {
             type: 'input',
             message: "What is your intern's name?",
-            name: 'ManagersName'
+            name: 'InternsName'
         },
         {
             type: 'input',
             message: "What is your intern's ID",
-            name: 'ManagersId'
+            name: 'InternsId'
         },
         {
             type: 'input',
             message: "What is your intern's Email?",
-            name: 'ManagersEmail'
+            name: 'InternsEmail'
         },
         {
             type: 'input',
             message: "What is your intern's Office Number?",
-            name: 'ManagersOffice'
+            name: 'InternsOffice'
         },
         {
             type: 'checkbox',
             message: "Would you like to add a new team member",
             name: 'options',
-            choices: ['Add Engineer', 'Add Intern', 'Finish biulding my team'],
+            choices: ['Add Engineer', 'Add Intern', 'Finish building my team'],
         } 
     ])
     .then((data) => nextup(data))
+}
+
+
+// will add the ending tags to index.html when the user id done adding employees
+finished = () => {
+    fs.appendFile('index.html', `</main>
+<script src="https://kit.fontawesome.com/24e32b4f06.js" crossorigin="anonymous"></script>
+</body>
+</html>`, (err) => console.log(err))
 }
 
 // calls the function questions corresponding to which team member you want to add
@@ -74,8 +89,8 @@ nextup = (data)=> {
         return engineerQs()
     } else if(data.options[0] === 'Add Intern') {
         return internQs()
-    } else if(data.options[0] === 'Finish biulding my team'){
-        return
+    } else if(data.options[0] === 'Finish building my team'){
+        return finished()
     }
 }
 
@@ -106,7 +121,7 @@ inquirer
             type: 'checkbox',
             message: "Would you like to add a new team member",
             name: 'options',
-            choices: ['Add Engineer', 'Add Intern', 'Finish biulding my team'],
+            choices: ['Add Engineer', 'Add Intern', 'Finish building my team'],
         }
     ])
     .then((data) => nextup(data))
