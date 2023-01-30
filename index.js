@@ -82,7 +82,6 @@ const internQs = () => {
 
 // will render the cards add the ending tags to index.html when the user id done adding employees
 const finished = () => {  
-    console.log(Allinfo)
     renderHtmlCards();
     fs.appendFile('./dist/index.html', `</main>
 <script src="https://kit.fontawesome.com/24e32b4f06.js" crossorigin="anonymous"></script>
