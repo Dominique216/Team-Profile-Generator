@@ -14,6 +14,7 @@ This application is a team profile generator. It uses node and inquirer to promp
 5. Answer the prompt questions in the terminal. Keep adding team members until you are satisfied with your team.
 6. Once you select the 'Finish Building my team' option, open the dist folder and an updated index.html file should be availble to open in your borwser and view your team profiles.
 ## Usage
+[Walkthrough Video](https://drive.google.com/file/d/1hHEt1-mbtEluUtNgHW2jgp2G_uV9dqAq/view)
 ![Opening Intergrated Terminal](./src/sc1.png)
 ![Running Code](./src/sc2.png)
 ![Questions](./src/sc3.png)
