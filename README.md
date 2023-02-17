@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-# UTA-bootcamp-challenge10
+# Team-Profile-Generator
 ## Description 
 This application is a team profile generator. It uses node and inquirer to prompt the user to answer questions about their team members and generates a web application that creates profiles for each team member they input. This project also uses jest testing to test each js file.
 ## Table of Contents
